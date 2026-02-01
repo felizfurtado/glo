@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Poppins", sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background: url("1.png") no-repeat center center/cover;
+}
+
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.1);
+  z-index:0;
+}
+
+.wrapper{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.card{
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(14px);
+  padding:50px 60px;
+  border-radius:32px;
+  text-align:center;
+  box-shadow:0 40px 90px rgba(0,0,0,0.25);
+}
+
+.teddy{
+  width:140px;
+  margin-bottom:20px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-12px); }
+}
+
+h1{
+  font-size:42px;
+  color:#ff4d6d;
+  margin-bottom:30px;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+}
+
+button{
+  padding:14px 38px;
+  font-size:18px;
+  border-radius:50px;
+  border:none;
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+#yes{
+  background:linear-gradient(135deg,#ff4d6d,#ff758f);
+  color:white;
+  box-shadow:0 15px 30px rgba(255,77,109,0.5);
+}
+
+#yes:hover{
+  transform:scale(1.1);
+}
+
+#no{
+  background:#f2f2f2;
+  color:#333;
+  position:relative;
+}
+
+/* Polaroid Styles */
+.polaroid-container {
+  display: flex;
+  gap: 40px;
+  margin-top: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.polaroid {
+  background: white;
+  padding: 15px 15px 40px;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transform: rotate(var(--rotate));
+  transition: transform 0.5s ease;
+  max-width: 220px;
+  text-align: center;
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.polaroid-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
+.polaroid-caption {
+  font-family: 'Courier New', monospace;
+  color: #666;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Success page animation */
+.success-content {
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Message for no button */
+.no-message {
+  color: #ff4d6d;
+  font-size: 16px;
+  margin-top: 10px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+.no-disabled {
+  background: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <div class="card">
+    <img 
+      src="https://media.tenor.com/rv8nXaTih6gAAAAi/masha-and-the-bear-good-for-you.gif"
+      alt="Cute Teddy"
+      class="teddy"
+    >
+    <h1>Will you be my Valentine? 💘</h1>
+    <div class="buttons">
+      <button id="yes">Yes 💕</button>
+      <button id="no">No 🙃</button>
+    </div>
+    <div id="noMessage" class="no-message"></div>
+  </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const noMessage = document.getElementById("noMessage");
+let noClicked = false;
+
+noBtn.addEventListener("mouseenter", () => {
+  if (!noClicked) {
+    const x = Math.random() * 300 - 150;
+    const y = Math.random() * 200 - 100;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+});
+
+noBtn.addEventListener("click", () => {
+  if (!noClicked) {
+    noClicked = true;
+    // Change button text and style
+    noBtn.innerHTML = "Too Late 😢";
+    noBtn.style.background = "#ccc";
+    noBtn.style.color = "#666";
+    noBtn.style.cursor = "not-allowed";
+    
+    // Remove hover effect
+    noBtn.onmouseenter = null;
+    noBtn.style.transform = "translate(0, 0)";
+    
+    // Show message
+    noMessage.innerHTML = "Fuck you baby!!! choose yes😒";
+    noMessage.style.color = "#ff4d6d";
+    noMessage.style.animation = "fadeIn 0.5s ease";
+    
+    // Make the button unclickable for 2 seconds
+    noBtn.disabled = true;
+    setTimeout(() => {
+      noBtn.disabled = false;
+    }, 2000);
+  }
+});
+
+// Reset message if user hovers over yes button
+yesBtn.addEventListener("mouseenter", () => {
+  if (noClicked) {
+    noMessage.innerHTML = "Yes! Choose Yes! 💖";
+    noMessage.style.color = "#ff4d6d";
+  }
+});
+
+document.getElementById("yes").addEventListener("click", () => {
+  document.body.innerHTML = `
+  <div style="
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:url('1.png') no-repeat center center/cover;
+    font-family:Poppins;
+    padding:20px;
+  ">
+    <div class="success-content" style="
+      background:rgba(255,255,255,0.95);
+      padding:40px 50px;
+      border-radius:30px;
+      max-width:900px;
+      text-align:center;
+      box-shadow:0 30px 80px rgba(0,0,0,0.2);
+    ">
+      <img 
+        src="https://media.tenor.com/iS4-T1xc_fAAAAAm/milk-and-mocha.webp"
+        style="width:130px;margin-bottom:10px;"
+      >
+      <h1 style="font-size:48px;color:#ff4d6d;margin-bottom:30px;">
+        Yayyy 💖🥰<br>
+        You're my Valentine!
+      </h1>
+    
+      
+      <div class="polaroid-container">
+        <div class="polaroid" style="--rotate: -5deg;">
+          <img src="pol1.jpeg" 
+               alt="Sweet Memory 1" 
+               class="polaroid-img">
+          <div class="polaroid-caption">I Love You💕</div>
+        </div>
+        
+        <div class="polaroid" style="--rotate: 5deg;">
+          <img src="pol2.jpeg" 
+               alt="Sweet Memory 2" 
+               class="polaroid-img">
+          <div class="polaroid-caption">Forever Together 💞</div>
+        </div>
+      </div>
+      
+      <p style="margin-top:40px;font-size:16px;color:#888;">
+        Can't wait to make more beautiful memories with you! 💝
+      </p>
+    </div>
+  </div>
+  `;
+});
+</script>
+
+</body>
+</html>
